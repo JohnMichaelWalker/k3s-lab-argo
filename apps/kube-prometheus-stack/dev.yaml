@@ -12,6 +12,10 @@ spec:
     helm:
       releaseName: kube-prometheus-stack
       values: |
+        prometheusOperator:
+          admissionWebhooks:
+            enabled: false
+              
         prometheus:
           prometheusSpec:
             retention: 15d
