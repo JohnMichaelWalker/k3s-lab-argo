@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: echo-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: nginx
+    targetRevision: 15.5.2
+    helm:
+      values: |
+        replicaCount: 1
+
+        image:
+          repository: hashicorp/http-echo
+          tag: "0.2.3"
+          pullPolicy: IfNotPresent
+        
+        containerPorts:
+          http: 5678
+
+        service:
+          type: ClusterIP
+          port: 5678
+
+        args:
+          - "-text=hello there!"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: echo-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
