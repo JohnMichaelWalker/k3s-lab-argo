@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: echo-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: registry-1.docker.io/johnwalker333
+    chart: garden
+    targetRevision: 0.0.12
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: garden
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
