@@ -10,8 +10,8 @@ spec:
     chart: kube-prometheus-stack
     targetRevision: 77.10.0
     helm:
+      skipCrds: true
       values: |
-        # Trying to add this as argo gets stuck on this one for some reason...
         prometheusOperator:
           admissionWebhooks:
             patch:
@@ -19,9 +19,16 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /metadata/annotations
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
+      - PruneLast=true
