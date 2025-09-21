@@ -27,6 +27,14 @@ spec:
 
         args:
           - "-text=hello there!"
+        
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            cpu: 50m
+            memory: 64Mi
   destination:
     server: https://kubernetes.default.svc
     namespace: echo-dev
