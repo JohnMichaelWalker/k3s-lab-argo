@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: registry-1.docker.io/johnwalker333
     chart: garden
-    targetRevision: 0.0.12
+    targetRevision: 0.0.13
   destination:
     server: https://kubernetes.default.svc
     namespace: garden
