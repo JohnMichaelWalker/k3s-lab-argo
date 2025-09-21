@@ -11,8 +11,12 @@ spec:
     targetRevision: 65.0.0
     helm:
       releaseName: kube-prometheus-stack
-      valueFiles:
-        - values/kube-prom-values.yaml
+      values: |
+        prometheus:
+          prometheusSpec:
+            retention: 15d
+            resources:
+              requests: { cpu: 200m, memory: 1Gi }
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
