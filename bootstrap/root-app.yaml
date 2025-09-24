@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/JohnMichaelWalker/k3s-lab-argo
     targetRevision: main
-    path: apps
+    path: deploy
     directory:
       recurse: true
   destination:
