@@ -8,6 +8,7 @@ spec:
   source:
     repoURL: registry-1.docker.io/johnwalker333
     chart: garden
+    targetRevision: 0.0.1
   destination:
     server: https://kubernetes.default.svc
     namespace: k3s-ui
