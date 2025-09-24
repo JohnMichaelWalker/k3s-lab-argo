@@ -7,6 +7,10 @@ data:
   config.yml: |
     tunnel: 0186a39a-4077-4831-866c-f98bdeb42147
     ingress:
-      - hostname: app.johnwalkers.com
+      - hostname: grafana.johnwalkers.com
+        service: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local:80
+      - hostname: k3s-lab.johnwalkers.com
+        service: http://k3s-ui.k3s-ui.svc.cluster.local:80
+      - hostname: johnwalkers.com
         service: http://k3s-ui.k3s-ui.svc.cluster.local:80
       - service: http_status:404
