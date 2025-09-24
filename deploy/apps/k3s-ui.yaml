@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: garden
+  name: k3s-ui
   namespace: argocd
 spec:
   project: default
