@@ -12,15 +12,61 @@ spec:
     helm:
       releaseName: kube-prometheus-stack
       values: |
+        x-small: &xsmall
+          requests: { cpu: 50m, memory: 64Mi }
+          limits:   { cpu: 100m, memory: 128Mi }
+        
+        small: &small
+          requests: { cpu: 100m, memory: 128Mi }
+          limits:   { cpu: 200m, memory: 256Mi }
+        
+        medium: &medium
+          requests: { cpu: 250m, memory: 512Mi }
+          limits:   { cpu: "1",  memory: 1Gi }
+        
+        medium: &large
+          requests: { cpu: "1", memory: 1Gi }
+          limits:   { cpu: "2",  memory: 2Gi }
+        
         prometheusOperator:
+          resources: *small
           admissionWebhooks:
             enabled: false
+          prometheusConfigReloader:
+            resources: *xsmall
               
         prometheus:
           prometheusSpec:
             retention: 15d
-            resources:
-              requests: { cpu: 200m, memory: 1Gi }
+            resources: *large
+          configmapReload:
+            resources: *xsmall
+        
+        alertmanager:  
+          alertmanagerSpec:
+            resources: *medium
+          configmapReload:
+            resources: *xsmall
+        
+        kube-state-metrics:
+          resources: *small
+        
+        prometheus-node-exporter:
+          resources: *xsmall
+        
+        grafana:
+          resources: *small
+          sidecar:
+            dashboards:
+              resources: *xsmall
+            datasources:
+              resources: *xsmall
+        
+        cleaner:
+          resources: *xsmall
+        create:
+          resources: *xsmall
+
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
