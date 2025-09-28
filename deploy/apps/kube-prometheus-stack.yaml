@@ -13,15 +13,15 @@ spec:
       releaseName: kube-prometheus-stack
       values: |
         x-small: &xsmall
-          requests: { cpu: 50m, memory: 64Mi }
-          limits:   { cpu: 100m, memory: 128Mi }
+          requests: { cpu: 25m,, memory: 64Mi }
+          limits:   { cpu: 200m, memory: 128Mi }
         
         small: &small
-          requests: { cpu: 100m, memory: 128Mi }
+          requests: { cpu: 50m, memory: 128Mi }
           limits:   { cpu: 200m, memory: 256Mi }
         
         medium: &medium
-          requests: { cpu: 150m, memory: 512Mi }
+          requests: { cpu: 100m, memory: 512Mi }
           limits:   { cpu: "1",  memory: 1Gi }
         
         medium: &large
