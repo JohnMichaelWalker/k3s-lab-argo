@@ -40,6 +40,12 @@ spec:
             reclaimPolicy: Delete
             volumeBindingMode: WaitForFirstConsumer
             allowVolumeExpansion: true
+  ignoreDifferences:
+    - group: storage.k8s.io
+      kind: CSIDriver
+      name: ebs.csi.aws.com
+      jsonPointers:
+        - /spec/nodeAllocatableUpdatePeriodSeconds
   syncPolicy:
     automated:
       prune: true
