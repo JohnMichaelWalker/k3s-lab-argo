@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-ebs-csi-driver
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  source:
+    repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    chart: aws-ebs-csi-driver
+    targetRevision: "2.*"
+    helm:
+      values: |
+        controller:
+          serviceAccount:
+            create: true
+            name: ebs-csi-controller-sa
+          replicaCount: 1
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 512Mi }
+
+        node:
+          tolerateAllTaints: true
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { cpu: 200m, memory: 256Mi }
+
+        storageClasses:
+          - name: ebs-gp3
+            annotations:
+              storageclass.kubernetes.io/is-default-class: "false"
+            parameters:
+              type: gp3
+              fstype: ext4
+              encrypted: "true"
+            reclaimPolicy: Delete
+            volumeBindingMode: WaitForFirstConsumer
+            allowVolumeExpansion: true
+
+        extraVolumeTags:
+          "kubernetes.io/cluster/${CLUSTER_NAME:-k3s}": "owned"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
