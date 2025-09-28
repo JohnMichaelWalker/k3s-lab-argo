@@ -55,14 +55,13 @@ spec:
           alertmanagerSpec:
             resources: *medium
             storageSpec:
-              storage:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: gp3-encrypted
-                    accessModes: ["ReadWriteOnce"]
-                    resources:
-                      requests:
-                        storage: 5Gi
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: gp3-encrypted
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 5Gi
           configmapReload:
             resources: *xsmall
         
