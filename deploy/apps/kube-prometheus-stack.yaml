@@ -76,6 +76,10 @@ spec:
           resources: *xsmall
         
         grafana:
+          admin:
+            existingSecret: grafana-admin-credentials
+            userKey: admin-user
+            passwordKey: admin-password          
           resources: *small
           persistence:
             enabled: true
