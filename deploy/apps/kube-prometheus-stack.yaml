@@ -38,7 +38,7 @@ spec:
         prometheus:
           prometheusSpec:
             retention: 15d
-            retentionSize: 10GB
+            retentionSize: "10GB"
             resources: *large
             storageSpec:
               volumeClaimTemplate:
@@ -77,12 +77,12 @@ spec:
         
         grafana:
           resources: *small
-            persistence:
-              enabled: true
-              type: pvc
-              storageClassName: ebs-gp3
-              accessModes: ["ReadWriteOnce"]
-              size: 5Gi
+          persistence:
+            enabled: true
+            type: pvc
+            storageClassName: ebs-gp3
+            accessModes: ["ReadWriteOnce"]
+            size: 5Gi
           sidecar:
             dashboards:
               resources: *xsmall
