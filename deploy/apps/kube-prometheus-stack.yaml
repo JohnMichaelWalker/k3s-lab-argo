@@ -54,6 +54,7 @@ spec:
         alertmanager:  
           alertmanagerSpec:
             resources: *medium
+            storageSpec:
               storage:
                 volumeClaimTemplate:
                   spec:
