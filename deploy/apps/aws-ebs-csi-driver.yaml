@@ -19,6 +19,8 @@ spec:
             create: true
             name: ebs-csi-controller-sa
           replicaCount: 1
+          extraVolumeTags:
+            "kubernetes.io/cluster/${CLUSTER_NAME:-k3s}": "owned"
           resources:
             requests: { cpu: 100m, memory: 128Mi }
             limits: { cpu: 500m, memory: 512Mi }
@@ -40,9 +42,6 @@ spec:
             reclaimPolicy: Delete
             volumeBindingMode: WaitForFirstConsumer
             allowVolumeExpansion: true
-
-        extraVolumeTags:
-          "kubernetes.io/cluster/${CLUSTER_NAME:-k3s}": "owned"
   syncPolicy:
     automated:
       prune: true
