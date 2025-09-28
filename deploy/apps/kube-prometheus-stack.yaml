@@ -24,7 +24,7 @@ spec:
           requests: { cpu: 100m, memory: 512Mi }
           limits:   { cpu: "1",  memory: 1Gi }
         
-        medium: &large
+        large: &large
           requests: { cpu: "200m", memory: 1Gi }
           limits:   { cpu: "1",  memory: 2Gi }
         
@@ -38,13 +38,30 @@ spec:
         prometheus:
           prometheusSpec:
             retention: 15d
+            retentionSize: 10Gi
             resources: *large
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: ebs-gp3
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 25Gi
           configmapReload:
             resources: *xsmall
         
         alertmanager:  
           alertmanagerSpec:
             resources: *medium
+              storage:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: gp3-encrypted
+                    accessModes: ["ReadWriteOnce"]
+                    resources:
+                      requests:
+                        storage: 5Gi
           configmapReload:
             resources: *xsmall
         
