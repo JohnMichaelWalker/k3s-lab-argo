@@ -38,7 +38,7 @@ spec:
         prometheus:
           prometheusSpec:
             retention: 15d
-            retentionSize: 10Gi
+            retentionSize: 10GB
             resources: *large
             storageSpec:
               volumeClaimTemplate:
