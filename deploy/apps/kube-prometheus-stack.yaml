@@ -42,6 +42,8 @@ spec:
             resources: *large
             storageSpec:
               volumeClaimTemplate:
+                metadata:
+                  name: prometheus-data
                 spec:
                   storageClassName: ebs-gp3
                   accessModes: ["ReadWriteOnce"]
@@ -54,8 +56,10 @@ spec:
         alertmanager:  
           alertmanagerSpec:
             resources: *medium
-            storageSpec:
+            storage:
               volumeClaimTemplate:
+                metadata:
+                  name: alertmanager-data
                 spec:
                   storageClassName: ebs-gp3
                   accessModes: ["ReadWriteOnce"]
@@ -73,6 +77,12 @@ spec:
         
         grafana:
           resources: *small
+            persistence:
+              enabled: true
+              type: pvc
+              storageClassName: ebs-gp3
+              accessModes: ["ReadWriteOnce"]
+              size: 5Gi
           sidecar:
             dashboards:
               resources: *xsmall
