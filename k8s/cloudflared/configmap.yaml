@@ -15,4 +15,6 @@ data:
         service: http://k3s-ui.k3s-ui.svc.cluster.local:80
       - hostname: petunia.johnwalkers.com
         service: http://petunia-service.garden.svc.cluster.local:80
+      - hostname: orderbook.johnwalkers.com
+        service: http://orderbook.garden.svc.cluster.local:80
       - service: http_status:404
